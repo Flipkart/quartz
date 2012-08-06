@@ -15,6 +15,7 @@
  * 
  */
 
+
 package org.quartz.utils.weblogic;
 
 import java.sql.Connection;
@@ -71,13 +72,16 @@ public class WeblogicConnectionProvider implements ConnectionProvider {
      */
 
     public Connection getConnection() throws SQLException {
-        return driver.connect("jdbc:weblogic:jts:" + poolName,
-                (java.util.Properties) null);
-    }
-
-    public void initialize() throws SQLException {
         try {
-            driver = (Driver) weblogic.jdbc.jts.Driver.class.newInstance();
+            if (driver == null) {
+                driver = (Driver)weblogic.jdbc.jts.Driver.class.newInstance();
+            }
+
+            java.sql.Connection con = null;
+            con = driver.connect("jdbc:weblogic:jts:" + poolName,
+                    (java.util.Properties) null);
+
+            return con;
         } catch (Exception e) {
             throw new SQLException(
                     "Could not get weblogic pool connection with name '"
@@ -85,9 +89,8 @@ public class WeblogicConnectionProvider implements ConnectionProvider {
                             + e.getMessage());
         }
     }
-
+    
     public void shutdown() throws SQLException {
         // do nothing
-    }
-
+    }    
 }
