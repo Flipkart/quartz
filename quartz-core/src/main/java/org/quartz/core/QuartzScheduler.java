@@ -232,11 +232,12 @@ public class QuartzScheduler implements RemotableQuartzScheduler {
 
         signaler = new SchedulerSignalerImpl(this, this.schedThread);
         
-        if(shouldRunUpdateCheck()) 
+        if(shouldRunUpdateCheck()) {
             updateTimer = scheduleUpdateCheck();
-        else
+            log.info("Update check is scheduled.");
+        } else {
             updateTimer = null;
-        
+        }
         getLog().info("Quartz Scheduler v." + getVersion() + " created.");
     }
 
@@ -329,6 +330,7 @@ public class QuartzScheduler implements RemotableQuartzScheduler {
     }
     
     private boolean shouldRunUpdateCheck() {
+        System.out.println("XXX: resources.isRunUpdateCheck(): " + resources.isRunUpdateCheck());
         if(resources.isRunUpdateCheck() && !Boolean.getBoolean(StdSchedulerFactory.PROP_SCHED_SKIP_UPDATE_CHECK) &&
                 !Boolean.getBoolean("org.terracotta.quartz.skipUpdateCheck")) {
             return true;
