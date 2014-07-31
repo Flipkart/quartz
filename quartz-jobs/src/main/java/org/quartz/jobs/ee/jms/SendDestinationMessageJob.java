@@ -34,7 +34,7 @@ import org.quartz.JobExecutionException;
  * <p>
  * A <code>Job</code> that sends a <code>javax.jms.Message</code> to a
  * <code>javax.jms.Destination</code>. Note, this class can only be used in a
- * JMS 1.1 compliant environment.
+ * JMS-based environment.
  * 
  * <p>
  * The following properties are expected to be provided in the
