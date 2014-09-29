@@ -431,7 +431,7 @@ public class SimpleTriggerImpl extends AbstractTrigger<SimpleTrigger> implements
             return false;
         }
 
-        if (misfireInstruction > MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_EXISTING_COUNT) {
+        if (misfireInstruction > MISFIRE_INSTRUCTION_FIRE_NOW_WITHOUT_RESCHEDULE) {
             return false;
         }
 
@@ -483,7 +483,7 @@ public class SimpleTriggerImpl extends AbstractTrigger<SimpleTrigger> implements
             instr = MISFIRE_INSTRUCTION_RESCHEDULE_NOW_WITH_REMAINING_REPEAT_COUNT;
         }
 
-        if (instr == MISFIRE_INSTRUCTION_FIRE_NOW) {
+        if (instr == MISFIRE_INSTRUCTION_FIRE_NOW || instr == MISFIRE_INSTRUCTION_FIRE_NOW_WITHOUT_RESCHEDULE) {
             setNextFireTime(new Date());
         } else if (instr == MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_EXISTING_COUNT) {
             Date newFireTime = getFireTimeAfter(new Date());

@@ -444,4 +444,17 @@ public class SimpleScheduleBuilder extends ScheduleBuilder<SimpleTrigger> {
         return this;
     }
 
+
+    /**
+     * If the Trigger misfires, use the
+     * {@link SimpleTrigger#MISFIRE_INSTRUCTION_FIRE_NOW_WITHOUT_RESCHEDULE} instruction.
+     *
+     * @return the updated SimpleScheduleBuilder
+     * @see SimpleTrigger#MISFIRE_INSTRUCTION_FIRE_NOW_WITHOUT_RESCHEDULE
+     */
+    public SimpleScheduleBuilder withMisfireHandlingInstructionFireNowWithoutReschedule() {
+        misfireInstruction = SimpleTrigger.MISFIRE_INSTRUCTION_FIRE_NOW_WITHOUT_RESCHEDULE;
+        return this;
+    }
+
 }

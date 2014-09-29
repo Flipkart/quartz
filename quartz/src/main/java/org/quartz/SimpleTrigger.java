@@ -42,6 +42,7 @@ public interface SimpleTrigger extends Trigger {
      * <i>NOTE:</i> This instruction should typically only be used for
      * 'one-shot' (non-repeating) Triggers. If it is used on a trigger with a
      * repeat count > 0 then it is equivalent to the instruction <code>{@link #MISFIRE_INSTRUCTION_RESCHEDULE_NOW_WITH_REMAINING_REPEAT_COUNT}
+     * @see SimpleTrigger#MISFIRE_INSTRUCTION_FIRE_NOW_WITHOUT_RESCHEDULE
      * </code>.
      * </p>
      */
@@ -126,7 +127,18 @@ public interface SimpleTrigger extends Trigger {
      * </p>
      */
     public static final int MISFIRE_INSTRUCTION_RESCHEDULE_NEXT_WITH_EXISTING_COUNT = 5;
-    
+
+    /**
+     * <p>
+     * Instructs the <code>{@link Scheduler}</code> that upon a mis-fire
+     * situation, the <code>{@link SimpleTrigger}</code> wants to be fired
+     * now by <code>Scheduler</code> but the next instance should fire on time.
+     * </p>
+     *
+     * */
+    public static final int MISFIRE_INSTRUCTION_FIRE_NOW_WITHOUT_RESCHEDULE = 6;
+
+
     /**
      * <p>
      * Used to indicate the 'repeat count' of the trigger is indefinite. Or in
