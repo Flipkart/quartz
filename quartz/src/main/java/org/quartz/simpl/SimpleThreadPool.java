@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.quartz.SchedulerConfigException;
 import org.quartz.spi.ThreadPool;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -411,6 +412,7 @@ public class SimpleThreadPool implements ThreadPool {
             }
 
             if (!isShutdown) {
+                log.info("Current thread pool size " + availWorkers.size());
                 WorkerThread wt = (WorkerThread)availWorkers.removeFirst();
                 busyWorkers.add(wt);
                 wt.run(runnable);
@@ -431,16 +433,21 @@ public class SimpleThreadPool implements ThreadPool {
     }
 
     public int blockForAvailableThreads() {
-        synchronized(nextRunnableLock) {
+        long startTime = System.currentTimeMillis();
+        try {
+            synchronized (nextRunnableLock) {
 
-            while((availWorkers.size() < 1 || handoffPending) && !isShutdown) {
-                try {
-                    nextRunnableLock.wait(500);
-                } catch (InterruptedException ignore) {
+                while ((availWorkers.size() < 1 || handoffPending) && !isShutdown) {
+                    try {
+                        nextRunnableLock.wait(500);
+                    } catch (InterruptedException ignore) {
+                    }
                 }
-            }
 
-            return availWorkers.size();
+                return availWorkers.size();
+            }
+        } finally {
+            log.info("Blocked " + (System.currentTimeMillis() - startTime) + " ms ");
         }
     }
 

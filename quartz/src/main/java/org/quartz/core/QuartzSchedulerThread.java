@@ -258,6 +258,7 @@ public class QuartzSchedulerThread extends Thread {
                     List<OperableTrigger> triggers = null;
 
                     long now = System.currentTimeMillis();
+                    long startTime = System.currentTimeMillis();
 
                     clearSignaledSchedulingChange();
                     try {
@@ -280,6 +281,8 @@ public class QuartzSchedulerThread extends Thread {
                         }
                         lastAcquireFailed = true;
                     }
+
+                    log.info("Took " + (System.currentTimeMillis() - startTime) + " ms " + " to acquire triggers");
 
                     if (triggers != null && !triggers.isEmpty()) {
 
@@ -420,6 +423,8 @@ public class QuartzSchedulerThread extends Thread {
                             }
 
                         }
+
+                        log.info("Took " + (System.currentTimeMillis() - startTime) + " ms to schedule jobs");
 
                         continue; // while (!halted)
                     }

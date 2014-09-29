@@ -131,7 +131,6 @@ public class SimpleTriggerTest extends SerializationTestSupport {
         simpleTrigger.setStartTime(startTime.getTime());
         simpleTrigger.setEndTime(endTime.getTime());
 
-        Date timeBeforeMisfire = new Date();
         simpleTrigger.updateAfterMisfire(null);
         assertEquals(startTime.getTime(), simpleTrigger.getStartTime());
         assertEquals(endTime.getTime(), simpleTrigger.getEndTime());
